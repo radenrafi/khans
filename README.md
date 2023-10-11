@@ -5,3 +5,5 @@ command sesudah clone :
 `npm install`
 <br>
 `php artisan key:generate`
+
+❗jangan lupa setup .env❗

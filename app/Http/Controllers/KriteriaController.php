@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use App\Models\Kriteria;
 use App\Models\ValueKriteria;
 use Illuminate\Http\Request;
@@ -45,6 +46,11 @@ class KriteriaController extends Controller
             $valueKriteria->value = $key + 1;
             $valueKriteria->detail = $value;
             $valueKriteria->save();
+        }
+
+        $cars = Car::all();
+        foreach ($cars as $key => $car) {
+            $car->kriterias()->attach($kriteria->id);
         }
         return response()->json('berhasil', 200);
     }

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('picture')->default('kosong.png');
+            $table->text('description');
+            $table->decimal('prefrensi', 8, 8)->default(0);
             $table->timestamps();
         });
     }

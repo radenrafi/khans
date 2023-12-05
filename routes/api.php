@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\KriteriaController;
+use App\Http\Controllers\SpkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,8 @@ Route::post('car', [CarController::class, 'store']);
 Route::get('car/{car}', [CarController::class, 'show']);
 Route::patch('car/{car}', [CarController::class, 'update']);
 Route::delete('car/{car}', [CarController::class, 'destroy']);
+
+Route::get('algorithm', [SpkController::class, 'index']);
+Route::post('algorithm', [SpkController::class, 'algorithmAhp']);
+Route::post('algorithm/confirm', [SpkController::class, 'confirmBobot']);
+Route::get('algorithm/rank', [SpkController::class, 'algorithmMaut']);

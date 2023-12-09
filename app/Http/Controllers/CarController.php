@@ -52,6 +52,25 @@ class CarController extends Controller
             $car->kriterias()->attach($kriteria->id, ['value' => $valueKriteria->value, 'detail' => $valueKriteria->detail]);
         }
 
+        return response()->json(['car_id' => $car->id, 'message' => 'berhasil'], 200);
+    }
+
+    public function storeImage(Request $request)
+    {
+        $validated = $request->validate([
+            'car_id' => ['required'],
+            'picture' => ['file', 'image', 'max:1000'],
+        ]);
+
+        $car = Car::find($request->car_id);
+
+        $extPicture = $request->picture->getClientOriginalExtension();
+        $pathPicture = "car-" . $car->name . '-' . time() . "." . $extPicture;
+        $pathStore = $request->picture->move(public_path('images/car'), $pathPicture);
+
+        $car->picture = $pathPicture;
+        $car->save();
+
         return response()->json('berhasil', 200);
     }
 

@@ -35,6 +35,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('kriteria/{kriteria}', [KriteriaController::class, 'destroy']);
 
     Route::post('car', [CarController::class, 'store']);
+    Route::post('car/image', [CarController::class, 'storeImage']);
     Route::patch('car/{car}', [CarController::class, 'update']);
     Route::delete('car/{car}', [CarController::class, 'destroy']);
 

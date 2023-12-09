@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
@@ -29,6 +30,8 @@ Route::get('kriteria/{kriteria}', [KriteriaController::class, 'show']);
 Route::get('car', [CarController::class, 'index']);
 Route::get('car/{car}', [CarController::class, 'show']);
 
+Route::get('about-us', [AboutUsController::class, 'index']);
+
 Route::middleware('auth:api')->group(function () {
     Route::post('kriteria', [KriteriaController::class, 'store']);
     Route::patch('kriteria/{kriteria}', [KriteriaController::class, 'update']);
@@ -43,6 +46,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('algorithm', [SpkController::class, 'algorithmAhp']);
     Route::post('algorithm/confirm', [SpkController::class, 'confirmBobot']);
     Route::get('algorithm/rank', [SpkController::class, 'algorithmMaut']);
+
+    Route::post('about-us', [AboutUsController::class, 'store']);
+    Route::post('about-us/{aboutUs}', [AboutUsController::class, 'update']);
+    Route::delete('about-us/{aboutUs}', [AboutUsController::class, 'destroy']);
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

@@ -33,18 +33,16 @@ class CarController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'max:255'],
-            'picture' => ['file', 'image', 'max:1000'],
             'description' => ['required'],
             'value' => ['required', 'array'],
         ]);
 
-        $extPicture = $request->picture->getClientOriginalExtension();
-        $pathPicture = "car-" . $request->name . '-' . time() . "." . $extPicture;
-        $pathStore = $request->picture->move(public_path('images/car'), $pathPicture);
+        // $extPicture = $request->picture->getClientOriginalExtension();
+        // $pathPicture = "car-" . $request->name . '-' . time() . "." . $extPicture;
+        // $pathStore = $request->picture->move(public_path('images/car'), $pathPicture);
 
         $car = new Car();
         $car->name = $request->name;
-        $car->picture = $pathPicture;
         $car->description = $request->description;
         $car->save();
 

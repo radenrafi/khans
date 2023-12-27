@@ -98,10 +98,12 @@ class CarController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'max:255'],
+            'description' => ['required'],
             'value' => ['required', 'array'],
         ]);
 
         $car->name = $request->name;
+        $car->description = $request->description;
         $car->save();
 
         // $car->kriterias()->detach();

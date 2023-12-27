@@ -37,12 +37,12 @@ Route::get('booking', [BookingController::class, 'index']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('kriteria', [KriteriaController::class, 'store']);
-    Route::patch('kriteria/{kriteria}', [KriteriaController::class, 'update']);
+    Route::post('kriteria/{kriteria}', [KriteriaController::class, 'update']);
     Route::delete('kriteria/{kriteria}', [KriteriaController::class, 'destroy']);
 
     Route::post('car', [CarController::class, 'store']);
     Route::post('car/image', [CarController::class, 'storeImage']);
-    Route::patch('car/{car}', [CarController::class, 'update']);
+    Route::post('car/{car}', [CarController::class, 'update']);
     Route::delete('car/{car}', [CarController::class, 'destroy']);
 
     Route::get('algorithm', [SpkController::class, 'index']);

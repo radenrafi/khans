@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->json('price_12_jam');
+            $table->json('price_full_day');
             $table->string('picture')->default('kosong.png');
             $table->text('description');
             $table->decimal('prefrensi', 8, 8)->default(0);

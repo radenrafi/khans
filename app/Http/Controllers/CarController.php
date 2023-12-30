@@ -33,6 +33,8 @@ class CarController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'max:255'],
+            'price_12_jam' => ['required', 'json'],
+            'price_full_day' => ['required', 'json'],
             'description' => ['required'],
             'value' => ['required', 'array'],
         ]);
@@ -43,6 +45,8 @@ class CarController extends Controller
 
         $car = new Car();
         $car->name = $request->name;
+        $car->price_12_jam = $request->price_12_jam;
+        $car->price_full_day = $request->price_full_day;
         $car->description = $request->description;
         $car->save();
 
@@ -98,11 +102,15 @@ class CarController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'max:255'],
+            'price_12_jam' => ['required', 'json'],
+            'price_full_day' => ['required', 'json'],
             'description' => ['required'],
             'value' => ['required', 'array'],
         ]);
 
         $car->name = $request->name;
+        $car->price_12_jam = $request->price_12_jam;
+        $car->price_full_day = $request->price_full_day;
         $car->description = $request->description;
         $car->save();
 

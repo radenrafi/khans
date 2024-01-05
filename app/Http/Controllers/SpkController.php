@@ -154,11 +154,15 @@ class SpkController extends Controller
         $cars = Car::all();
 
         $nilaiKriteria = collect();
-        foreach ($cars as $key => $car) {
+        foreach ($cars as $car) {
             $row = collect();
-            foreach ($kriterias as $key => $kriteria) {
-                $carKriteria = $car->kriterias()->find($kriteria->id);
-                $temp = collect(["car" => $car->id, "kriteria" => $kriteria->id, "value" => $carKriteria->pivot->value]);
+            foreach ($kriterias as $kriteria) {
+                $carKriteria = $car->kriterias->firstWhere('id', $kriteria->id);
+                $temp = collect([
+                    "car" => $car->id,
+                    "kriteria" => $kriteria->id,
+                    "value" => $carKriteria->pivot->value
+                ]);
                 $row->push($temp);
             }
             $nilaiKriteria->push($row);
@@ -167,19 +171,15 @@ class SpkController extends Controller
         $flattened = $nilaiKriteria->flatten(1);
         $groupedByKriteria = $flattened->groupBy('kriteria');
 
-        // minimum value
         $minimumValues = $groupedByKriteria->map(function ($items) {
             return $items->min('value');
-        });
-        $minimumValuesWithKriteria = $minimumValues->mapWithKeys(function ($minValue, $kriteria) {
+        })->mapWithKeys(function ($minValue, $kriteria) {
             return [$kriteria => ['kriteria' => $kriteria, 'value' => $minValue]];
         });
 
-        // maksimum value
         $maximumValues = $groupedByKriteria->map(function ($items) {
             return $items->max('value');
-        });
-        $maximumValuesWithKriteria = $maximumValues->mapWithKeys(function ($maxValue, $kriteria) {
+        })->mapWithKeys(function ($maxValue, $kriteria) {
             return [$kriteria => ['kriteria' => $kriteria, 'value' => $maxValue]];
         });
 
@@ -187,15 +187,18 @@ class SpkController extends Controller
         foreach ($cars as $i => $car) {
             $row = collect();
             foreach ($kriterias as $j => $kriteria) {
-                $min = $minimumValuesWithKriteria->firstWhere('kriteria', $kriteria->id);
-                $max = $maximumValuesWithKriteria->firstWhere('kriteria', $kriteria->id);
+                $min = $minimumValues[$kriteria->id];
+                $max = $maximumValues[$kriteria->id];
                 $value = ($nilaiKriteria[$i][$j]['value'] - $min['value']) / ($max['value'] - $min['value']);
-                $temp = collect(["car" => $car->id, "kriteria" => $kriteria->id, "value" => $value]);
+                $temp = collect([
+                    "car" => $car->id,
+                    "kriteria" => $kriteria->id,
+                    "value" => $value
+                ]);
                 $row->push($temp);
             }
             $utilitas->push($row);
         }
-        // dump($utilitas);
 
         $prefrensi = collect();
         foreach ($cars as $i => $car) {
@@ -212,8 +215,8 @@ class SpkController extends Controller
 
         $result = [
             "tabelNilaiKriteria" => $nilaiKriteria,
-            "min" => $minimumValuesWithKriteria,
-            "maks" => $maximumValuesWithKriteria,
+            "min" => $minimumValues,
+            "maks" => $maximumValues,
             "tabelUtilitas" => $utilitas,
             "preferensi" => $prefrensi,
             "ranking" => $rankCar,

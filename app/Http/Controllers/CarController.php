@@ -18,6 +18,12 @@ class CarController extends Controller
         return response()->json($cars);
     }
 
+    public function rank()
+    {
+        $cars = Car::with('kriterias')->orderBy('prefrensi', 'desc')->get();
+        return response()->json($cars);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

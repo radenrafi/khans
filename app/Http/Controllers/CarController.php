@@ -18,6 +18,11 @@ class CarController extends Controller
         return response()->json($cars);
     }
 
+    /**
+     * Rank the cars based on their preferences.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function rank()
     {
         $cars = Car::with('kriterias')->orderBy('prefrensi', 'desc')->get();

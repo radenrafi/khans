@@ -29,6 +29,7 @@ Route::get('kriteria', [KriteriaController::class, 'index']);
 Route::get('kriteria/{kriteria}', [KriteriaController::class, 'show']);
 
 Route::get('car', [CarController::class, 'index']);
+Route::get('car/rank', [CarController::class, 'rank']);
 Route::get('car/{car}', [CarController::class, 'show']);
 
 Route::get('about-us', [AboutUsController::class, 'index']);

@@ -183,6 +183,9 @@ class SpkController extends Controller
             return [$kriteria => ['kriteria' => $kriteria, 'value' => $maxValue]];
         });
 
+        dump($minimumValues);
+        dd($maximumValues);
+
         $utilitas = collect();
         foreach ($cars as $i => $car) {
             $row = collect();

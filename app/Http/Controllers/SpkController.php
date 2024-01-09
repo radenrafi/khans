@@ -183,6 +183,9 @@ class SpkController extends Controller
             return [$kriteria => ['kriteria' => $kriteria, 'value' => $maxValue]];
         });
 
+        dump($nilaiKriteria);
+        dump($flattened);
+        dump($groupedByKriteria);
         dump($minimumValues);
         dd($maximumValues);
 

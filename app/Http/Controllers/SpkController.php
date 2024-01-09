@@ -189,7 +189,11 @@ class SpkController extends Controller
             foreach ($kriterias as $j => $kriteria) {
                 $min = $minimumValues[$kriteria->id];
                 $max = $maximumValues[$kriteria->id];
-                $value = ($nilaiKriteria[$i][$j]['value'] - $min['value']) / ($max['value'] - $min['value']);
+                if ($min['value'] == $max['value']) {
+                    $value = 1;
+                } else {
+                    $value = ($nilaiKriteria[$i][$j]['value'] - $min['value']) / ($max['value'] - $min['value']);
+                }
                 $temp = collect([
                     "car" => $car->id,
                     "kriteria" => $kriteria->id,

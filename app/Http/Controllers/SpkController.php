@@ -53,7 +53,7 @@ class SpkController extends Controller
                         } else if ($value['leftKriteria'] == $perbandingan['rightKriteria'] && $value['upKriteria'] == $perbandingan['leftKriteria']) {
                             $value['value'] = $perbandingan['right'] / $perbandingan['left'];
                         } else {
-                            return response()->json('kriteria tidak ditemukan');
+                            return response()->json(['error' => 'Kriteria tidak ditemukan'], 400);
                         }
                     }
                 }

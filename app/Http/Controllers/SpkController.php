@@ -26,7 +26,7 @@ class SpkController extends Controller
     public function algorithmAhp(Request $request)
     {
         // dump($request[0]);
-        $kriterias = Kriteria::all();
+        $kriterias = Kriteria::latest()->take(5)->get();
         $kriteriaCount = $kriterias->count();
 
         $initialMatriks = collect();
@@ -51,6 +51,8 @@ class SpkController extends Controller
                             $value['value'] = $perbandingan['left'] / $perbandingan['right'];
                         } else if ($value['leftKriteria'] == $perbandingan['rightKriteria'] && $value['upKriteria'] == $perbandingan['leftKriteria']) {
                             $value['value'] = $perbandingan['right'] / $perbandingan['left'];
+                        } else {
+                            return response()->json('kriteria tidak ditemukan');
                         }
                     }
                 }

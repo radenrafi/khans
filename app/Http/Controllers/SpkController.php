@@ -40,7 +40,25 @@ class SpkController extends Controller
             $initialMatriks->push($matriks);
         }
 
+        $perbandinganKriterias = collect();
+        for ($i = 0; $i < $kriterias->count(); $i++) {
+            for ($j = $i + 1; $j < $kriterias->count(); $j++) {
+                $temp = ["leftKriteria" => $kriterias[$i]->id, "left" => 1, "right" => 1, "rightKriteria" => $kriterias[$j]->id];
+                $perbandinganKriterias->push($temp);
+            }
+        }
+
         $perbandingans = $request->request;
+
+        if (count($perbandinganKriterias) !== count($perbandingans)) {
+            return response('Error: the matrix is not equal', 400);
+        }
+
+        foreach ($perbandingans as $key => $value) {
+            if ($value['leftKriteria'] !== $perbandinganKriterias[$key]['leftKriteria'] || $value['rightKriteria'] !== $perbandinganKriterias[$key]['rightKriteria']) {
+                return response('Error: criteria comparison is not matched', 400);
+            }
+        }
 
         foreach ($initialMatriks as $key => $row) {
             foreach ($row as $key => $value) {

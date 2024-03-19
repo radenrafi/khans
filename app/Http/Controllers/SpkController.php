@@ -26,7 +26,8 @@ class SpkController extends Controller
     public function algorithmAhp(Request $request)
     {
         // dump($request[0]);
-        $kriterias = Kriteria::latest()->take(5)->get();
+        $kriterias = Kriteria::all();
+        // $kriterias = Kriteria::latest()->take(5)->get();
         $kriteriaCount = $kriterias->count();
 
         $initialMatriks = collect();

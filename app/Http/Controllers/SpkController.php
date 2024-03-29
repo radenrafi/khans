@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\Kriteria;
+use App\Models\Result;
 use Illuminate\Http\Request;
 
 class SpkController extends Controller
@@ -148,6 +149,18 @@ class SpkController extends Controller
             "indeksRandom" => $indeksRandom,
             "cr" => $cr,
         ];
+
+        $algorithmResult = Result::latest('created_at')->first();
+
+        if (!$algorithmResult) {
+            $algorithmResult = new Result();
+            $algorithmResult->ahp = json_encode($result);
+            $algorithmResult->save();
+        } else {
+            $algorithmResult->ahp = json_encode($result);
+            $algorithmResult->save();
+        }
+
         return response()->json($result);
     }
 
@@ -244,6 +257,32 @@ class SpkController extends Controller
             "preferensi" => $prefrensi,
             "ranking" => $rankCar,
         ];
+
+        $algorithmResult = Result::latest('created_at')->first();
+
+        if (!$algorithmResult) {
+            $algorithmResult = new Result();
+            $algorithmResult->maut = json_encode($result);
+            $algorithmResult->save();
+        } else {
+            $algorithmResult->maut = json_encode($result);
+            $algorithmResult->save();
+        }
+
+        return response()->json($result);
+    }
+
+    public function getAlgorithmResult()
+    {
+        $result = Result::latest('created_at')->first();
+        $ahp = json_decode($result->ahp);
+        $maut = json_decode($result->maut);
+
+        $result = [
+            "ahp" => $ahp,
+            "maut" => $maut,
+        ];
+
         return response()->json($result);
     }
 }

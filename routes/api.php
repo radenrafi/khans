@@ -50,6 +50,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('algorithm', [SpkController::class, 'algorithmAhp']);
     Route::post('algorithm/confirm', [SpkController::class, 'confirmBobot']);
     Route::get('algorithm/rank', [SpkController::class, 'algorithmMaut']);
+    Route::get('algorithm/result', [SpkController::class, 'getAlgorithmResult']);
 
     Route::post('about-us', [AboutUsController::class, 'store']);
     Route::post('about-us/{aboutUs}', [AboutUsController::class, 'update']);
